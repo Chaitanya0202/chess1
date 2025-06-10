@@ -37,11 +37,17 @@ export const isValidMove = (piece: PieceType, from: [number, number], to: [numbe
   switch (piece.type) {
     case 'p': // Pawn
       if (piece.color === 'white') {
-        return (dx === 0 && dy === -1 && !targetPiece) || (dx === 0 && dy === -2 && fromY === 6 && !targetPiece && board[fromY - 1][fromX] === null) ||
-               (Math.abs(dx) === 1 && dy === -1 && targetPiece && targetPiece.color === 'black');
+        return (
+          (dx === 0 && dy === -1 && !targetPiece) ||
+          (dx === 0 && dy === -2 && fromY === 6 && !targetPiece && board[fromY - 1] !== undefined && board[fromY - 1][fromX] === null) ||
+          (Math.abs(dx) === 1 && dy === -1 && !!targetPiece && targetPiece.color === 'black')
+        );
       } else {
-        return (dx === 0 && dy === 1 && !targetPiece) || (dx === 0 && dy === 2 && fromY === 1 && !targetPiece && board[fromY + 1][fromX] === null) ||
-               (Math.abs(dx) === 1 && dy === 1 && targetPiece && targetPiece.color === 'white');
+        return (
+          (dx === 0 && dy === 1 && !targetPiece) ||
+          (dx === 0 && dy === 2 && fromY === 1 && !targetPiece && board[fromY + 1] !== undefined && board[fromY + 1][fromX] === null) ||
+          (Math.abs(dx) === 1 && dy === 1 && !!targetPiece && targetPiece.color === 'white')
+        );
       }
     case 'r': // Rook
       if (dx !== 0 && dy !== 0) return false;
@@ -196,7 +202,7 @@ export const handleMove = (gameState: GameState, from: [number, number], to: [nu
   newBoard[to[1]][to[0]] = piece;
 
   // Handle castling
-  if (piece.type === 'k' && Math.abs(to[0] - from[0]) === 2) {
+  if (piece && piece.type === 'k' && Math.abs(to[0] - from[0]) === 2) {
     if (to[0] === 6) {
       // King-side castling
       newBoard[to[1]][5] = newBoard[to[1]][7];
@@ -210,7 +216,7 @@ export const handleMove = (gameState: GameState, from: [number, number], to: [nu
 
   // Update castling rights
   const castlingRights = { ...gameState.castlingRights };
-  if (piece.type === 'k') {
+  if (piece && piece.type === 'k') {
     if (piece.color === 'white') {
       castlingRights.white.kingSide = false;
       castlingRights.white.queenSide = false;
@@ -218,7 +224,7 @@ export const handleMove = (gameState: GameState, from: [number, number], to: [nu
       castlingRights.black.kingSide = false;
       castlingRights.black.queenSide = false;
     }
-  } else if (piece.type === 'r') {
+  } else if (piece && piece.type === 'r') {
     if (piece.color === 'white') {
       if (from[0] === 0 && from[1] === 7) castlingRights.white.queenSide = false;
       if (from[0] === 7 && from[1] === 7) castlingRights.white.kingSide = false;
