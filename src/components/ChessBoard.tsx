@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moveSound from '../../src/sound/sound-move.mp3';
+// import moveSound from '../../src/sound/sound-move.mp3';
 // import captureSound from '../assets/sound-capture.mp3';
 import { isValidMove } from '../gameLogic';
 import Piece from './Piece';
@@ -10,7 +10,7 @@ interface ChessBoardProps {
   onMove: (from: string, to: string) => void;
 }
 
-const moveAudio = new Audio(moveSound);
+// const moveAudio = new Audio(moveSound);
 const captureAudio = new Audio('');
 
 const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => {
@@ -29,7 +29,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => {
       if (piece) {
         captureAudio.play();
       } else {
-        moveAudio.play();
+        // moveAudio.play();
       }
 
       onMove(selectedSquare, square);
