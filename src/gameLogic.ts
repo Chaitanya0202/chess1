@@ -35,19 +35,37 @@ export const isValidMove = (piece: PieceType, from: [number, number], to: [numbe
   }
 
   switch (piece.type) {
-    case 'p': // Pawn
+    // case 'p': // Pawn
+    //   if (piece.color === 'white') {
+    //     return (
+    //       (dx === 0 && dy === -1 && !targetPiece) ||
+    //       (dx === 0 && dy === -2 && fromY === 6 && !targetPiece && board[fromY - 1] !== undefined && board[fromY - 1][fromX] === null) ||
+    //       (Math.abs(dx) === 1 && dy === -1 && !!targetPiece && targetPiece.color === 'black')
+    //     );
+    //   } else {
+    //     return (
+    //       (dx === 0 && dy === 1 && !targetPiece) ||
+    //       (dx === 0 && dy === 2 && fromY === 1 && !targetPiece && board[fromY + 1] !== undefined && board[fromY + 1][fromX] === null) ||
+    //       (Math.abs(dx) === 1 && dy === 1 && !!targetPiece && targetPiece.color === 'white')
+    //     );
+    //   }
+        case 'p': // Pawn
       if (piece.color === 'white') {
         return (
           (dx === 0 && dy === -1 && !targetPiece) ||
-          (dx === 0 && dy === -2 && fromY === 6 && !targetPiece && board[fromY - 1] !== undefined && board[fromY - 1][fromX] === null) ||
+          (dx === 0 && dy === -2 && fromY === 6 && !targetPiece &&
+            board[fromY - 1] !== undefined &&
+            board[fromY - 1][fromX] === null) ||
           (Math.abs(dx) === 1 && dy === -1 && !!targetPiece && targetPiece.color === 'black')
-        );
+        ) ? true : false;
       } else {
         return (
           (dx === 0 && dy === 1 && !targetPiece) ||
-          (dx === 0 && dy === 2 && fromY === 1 && !targetPiece && board[fromY + 1] !== undefined && board[fromY + 1][fromX] === null) ||
+          (dx === 0 && dy === 2 && fromY === 1 && !targetPiece &&
+            board[fromY + 1] !== undefined &&
+            board[fromY + 1][fromX] === null) ||
           (Math.abs(dx) === 1 && dy === 1 && !!targetPiece && targetPiece.color === 'white')
-        );
+        ) ? true : false;
       }
     case 'r': // Rook
       if (dx !== 0 && dy !== 0) return false;
